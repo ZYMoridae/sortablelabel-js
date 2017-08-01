@@ -87,18 +87,18 @@ class @SortableLabel
   calWeekGroupLabel: (target) ->
     _this = this
     week_group_label_list = []
-    $(@target.selector).each(->
+    $(@target).each(->
       $(this).find(target).each(->
-        _index = _this.isIncludeWeekGroup($(this).text(), week_group_label_list)
+        _index = _this.isIncludeWeekGroup($(this).text().split(" ")[0], week_group_label_list)
         if _index is -1
           week_group_label_list.push(
-            name: $(this).text(),
+            name: $(this).text().split(" ")[0],
             count: 1
           )
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>"+$(this).text()+" 1")
+          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>"+$(this).text().split(" ")[0]+" 1")
         else if _index > -1
           week_group_label_list[_index].count += 1
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>"+$(this).text()+" "+week_group_label_list[_index].count)
+          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>"+$(this).text().split(" ")[0]+" "+week_group_label_list[_index].count)
       )
     )
 
