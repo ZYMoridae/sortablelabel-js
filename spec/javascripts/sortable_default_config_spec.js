@@ -107,6 +107,7 @@ describe("default config test", function() {
   it("workout group label", function() {
     $('#test-part4').sortableLabel({
       fieldName: 'test_field',
+      labelTarget: 'label[rel=m]',
       weekGroupLabelTarget: '.test_group_label'
     });
 
