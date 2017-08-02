@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start my.conf.js",
-    "plugin": "npm install | bower install"
+    "dependency": "npm install | bower install"
   },
   "author": "",
   "license": "MIT",

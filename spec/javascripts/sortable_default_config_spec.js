@@ -104,6 +104,7 @@ describe("default config test", function() {
   });
 
   // Workout group label test
+
   // it("workout group label", function() {
   //   $('#test-part4').sortableLabel({
   //     fieldName: 'test_field',
@@ -127,8 +128,5 @@ describe("default config test", function() {
   //   expect(targetWorkoutGroupId).toBe(expectedWorkoutGroupId);
   //   expect(targetGroupLabel).toBe(expectedGroupLabel);
 
-
-
   // });
-
 });
