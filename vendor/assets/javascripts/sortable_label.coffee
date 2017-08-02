@@ -108,7 +108,7 @@ class @SortableLabel
     )
 
   isIncludeWeekGroup: (item, arr)->
-    if item == " "
+    if item == " " || item.trim() == ""
       return -2
     for _item, index in arr
       return index if _item.name is item
