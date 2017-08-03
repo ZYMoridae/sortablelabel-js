@@ -14,14 +14,17 @@ describe("default config test", function() {
 
     $(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
 
+    // Label text test
     $('#test-part label').each(function(index, item) {
     	expect($(item).html()).toBe('Step '+String(index+1));
     });
 
+    // Is sorted
     $('#test-part .fields').each(function(index, item) {
     	expect($(item).attr('id')).toBe(expectedIdList[index]);
     });
 
+    // Position field test
     $('#test-part .fields .position-field').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
     });
@@ -38,14 +41,17 @@ describe("default config test", function() {
 
   	$(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
 
+    // Label text test
   	$('#test-part label').each(function(index, item) {
     	expect($(item).html()).toBe(weekday[index]);
     });
 
+    // Is sorted
     $('#test-part .fields').each(function(index, item) {
     	expect($(item).attr('id')).toBe(expectedIdList[index]);
     });
     
+    // Position field test
     $('#test-part .fields .position-field').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
     });
@@ -60,14 +66,17 @@ describe("default config test", function() {
 
     $('#test-part').append("<div class='fields' id='5'><label></label><a class='remove_nested_fields' data-association='test_field'></a><input id='5_destroy' value='false'><input class='position-field'></div>").trigger('sortableLabel:refresh');
 
+    // Label text test
   	$('#test-part label:visible').each(function(index, item) {
   		expect($(item).html()).toBe('Step '+String(index+1));
   	});
 
+    // Is sorted
     $('#test-part .fields:visible').each(function(index, item) {
       expect(String($(item).attr('id'))).toBe(String(index+1));
     });
 
+    // Position field test
     $('#test-part .position-field:visible').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
     });
@@ -84,24 +93,20 @@ describe("default config test", function() {
 
     var expectedIdList = ['1', '3', '4'];
 
+    // Label text test
     $('#test-part5 label:visible').each(function(index, item) {
       expect($(item).html()).toBe('Step '+String(index+1));
     });
     
+    // Is sorted
     $('#test-part5 .fields:visible').each(function(index, item) {
       expect(String($(item).attr('id'))).toBe(expectedIdList[index]);
     });
 
+    // Position field test
     $('#test-part5 .position-field:visible').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
     });
-    console.log($('#test-part').html());
-    var expectedPositionFieldVal = '1234',
-        targetPositionFieldVal = '';
-    $('#test-part .position-field').each(function(index, item) {
-      targetPositionFieldVal += $(item).val();
-    });
-    expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
   });
 
   // Nested label test
@@ -112,7 +117,8 @@ describe("default config test", function() {
       nestedTarget: function() {
         $('.test-part3').sortableLabel({
           fieldName: 'nested_test_field',
-          labelTarget: 'label[rel=3]'
+          labelTarget: 'label[rel=3]',
+          positionTarget: '.nested_position-field'
         });
       }      
     });
@@ -122,13 +128,16 @@ describe("default config test", function() {
 
     $(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
 
+    // Parent position field test & is sorted
     $('#test-part2 > .fields').each(function(index, item) {
       expect($(item).attr('id')).toBe(String(index+1));
       expect($(item).find('.position-field').val()).toBe(String(index+1));
     });
 
+
     $('.test-part3 > .fields').each(function(index, item) {
       expect($(item).attr('id')).toBe(expectedNestedId[index]);
+      expect($(item).find('.nested_position-field').val()).toBe(String((index)%4+1));
     });
 
   });
