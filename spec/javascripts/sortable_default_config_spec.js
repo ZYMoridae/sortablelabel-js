@@ -134,7 +134,6 @@ describe("default config test", function() {
       expect($(item).find('.position-field').val()).toBe(String(index+1));
     });
 
-
     $('.test-part3 > .fields').each(function(index, item) {
       expect($(item).attr('id')).toBe(expectedNestedId[index]);
       expect($(item).find('.nested_position-field').val()).toBe(String((index)%4+1));
