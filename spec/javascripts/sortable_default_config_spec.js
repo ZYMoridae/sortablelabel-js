@@ -9,7 +9,8 @@ describe("default config test", function() {
     $('#test-part').sortableLabel({
       fieldName: "test_field"
     });
-    var allElements = $('#test-part .fields');
+    var allElements = $('#test-part .fields'),
+        expectedIdList = ['3', '1', '2', '4'];
 
     $(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
 
@@ -17,12 +18,9 @@ describe("default config test", function() {
     	expect($(item).html()).toBe('Step '+String(index+1));
     });
 
-    var expectedIdList = '3124',
-    		targetIdList = '';
     $('#test-part .fields').each(function(index, item) {
-    	targetIdList += String($(item).attr('id'));
+    	expect($(item).attr('id')).toBe(expectedIdList[index]);
     });
-    expect(targetIdList).toBe(expectedIdList);
 
     $('#test-part .fields .position-field').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
@@ -35,15 +33,17 @@ describe("default config test", function() {
   	$('#test-part').sortableLabel({
   		label: "Day"
   	});  
-    var allElements = $('#test-part .fields.ui-sortable-handle');
+    var allElements = $('#test-part .fields'),
+        expectedIdList = ['3', '1', '2', '4'];
+
   	$(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
+
   	$('#test-part label').each(function(index, item) {
     	expect($(item).html()).toBe(weekday[index]);
     });
-    var expectedIdList = '3124',
-    		targetIdList = '';
-    $('#test-part .fields').each(function(inedx, item) {
-    	targetIdList += String($(item).attr('id'));
+
+    $('#test-part .fields').each(function(index, item) {
+    	expect($(item).attr('id')).toBe(expectedIdList[index]);
     });
 
     $('#test-part .fields .position-field').each(function(index, item) {
@@ -53,19 +53,17 @@ describe("default config test", function() {
 
   // Add label test
   it("Add new label", function() {
-  	$('#test-part').append("<div class='fields' id='5'><label></label><a class='remove_nested_fields' data-association='test_field'></a><input id='5_destroy' value='false'><input class='position-field'></div>");
 
   	$('#test-part').sortableLabel({
       fieldName: "test_field"
     });
 
-  	$('#test-part').trigger('sortableLabel:refresh');
+    $('#test-part').append("<div class='fields' id='5'><label></label><a class='remove_nested_fields' data-association='test_field'></a><input id='5_destroy' value='false'><input class='position-field'></div>").trigger('sortableLabel:refresh');
 
   	$('#test-part label:visible').each(function(index, item) {
   		expect($(item).html()).toBe('Step '+String(index+1));
   	});
-    var expectedIdList = '12345',
-    		targetIdList = '';
+
     $('#test-part .fields:visible').each(function(index, item) {
       expect(String($(item).attr('id'))).toBe(String(index+1));
     });
@@ -84,15 +82,15 @@ describe("default config test", function() {
 
     $('#test-part5').trigger('sortableLabel:refresh');
 
+    var expectedIdList = ['1', '3', '4'];
+
     $('#test-part5 label:visible').each(function(index, item) {
       expect($(item).html()).toBe('Step '+String(index+1));
     });
-    var expectedIdList = '134',
-        targetIdList = '';
+    
     $('#test-part5 .fields:visible').each(function(index, item) {
-      targetIdList += String($(item).attr('id'));
+      expect(String($(item).attr('id'))).toBe(expectedIdList[index]);
     });
-    expect(targetIdList).toBe(expectedIdList);
 
     $('#test-part5 .position-field:visible').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
@@ -112,31 +110,19 @@ describe("default config test", function() {
       }      
     });
 
-    var allElements = $('.test-part3 .fields');
+    var allElements = $('.test-part3 .fields'),
+        expectedNestedId = ['3', '1', '2', '4', '1', '2', '3', '4'];
+
     $(allElements[2]).insertBefore($(allElements[0])).trigger('sortableLabel:refresh');
 
-    var expectedParentId = '1234',
-        targetParentId = '',
-        expectedParentPositionField = '1234',
-        targetParentPositionField = '';
-
     $('#test-part2 > .fields').each(function(index, item) {
-      targetParentId += $(item).attr('id');
-      targetParentPositionField += $(item).find('.position-field').val();
+      expect($(item).attr('id')).toBe(String(index+1));
+      expect($(item).find('.position-field').val()).toBe(String(index+1));
     });
-
-    expect(targetParentId).toBe(expectedParentId);
-
-    expect(targetParentPositionField).toBe(expectedParentPositionField);
-
-     var expectedNestedId = '31241234',
-        targetNestedId = '';
 
     $('.test-part3 > .fields').each(function(index, item) {
-      targetNestedId += $(item).attr('id');
+      expect($(item).attr('id')).toBe(expectedNestedId[index]);
     });
-
-    expect(targetNestedId).toBe(expectedNestedId);   
 
   });
 
