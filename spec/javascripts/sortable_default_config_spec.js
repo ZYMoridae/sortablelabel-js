@@ -24,13 +24,9 @@ describe("default config test", function() {
     });
     expect(targetIdList).toBe(expectedIdList);
 
-    var expectedPositionFieldVal = '1234',
-        targetPositionFieldVal = '';
     $('#test-part .fields .position-field').each(function(index, item) {
-      targetPositionFieldVal += $(item).val();
+      expect($(item).val()).toBe(String(index+1));
     });
-    expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
-
   });
 
   // 'Day' label test
@@ -49,44 +45,59 @@ describe("default config test", function() {
     $('#test-part .fields').each(function(inedx, item) {
     	targetIdList += String($(item).attr('id'));
     });
-    var expectedPositionFieldVal = '1234',
-        targetPositionFieldVal = '';
+
     $('#test-part .fields .position-field').each(function(index, item) {
-      targetPositionFieldVal += $(item).val();
+      expect($(item).val()).toBe(String(index+1));
     });
-    expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
   });
 
-  // Add and delete label test
-  // it("has deleted label", function() {
-  // 	$('#test-part').append("<div class='fields' id='5'><label></label><a class='remove_nested_fields' data-association='test_field'></a><input id='5_destroy' value='false'><input class='position-field'></div>");
+  // Add label test
+  it("Add new label", function() {
+  	$('#test-part').append("<div class='fields' id='5'><label></label><a class='remove_nested_fields' data-association='test_field'></a><input id='5_destroy' value='false'><input class='position-field'></div>");
 
-  // 	$('#test-part').sortableLabel({
-  //     fieldName: "test_field"
-  //   });
+  	$('#test-part').sortableLabel({
+      fieldName: "test_field"
+    });
 
-  //   $('#test-part #3_destroy').val('1');
-  // 	$($('.fields')[3]).css('display', 'none');
+  	$('#test-part').trigger('sortableLabel:refresh');
 
-  // 	$('#test-part').trigger('sortableLabel:refresh');
-  //   console.log($('#test-part').html());
+  	$('#test-part label:visible').each(function(index, item) {
+  		expect($(item).html()).toBe('Step '+String(index+1));
+  	});
+    var expectedIdList = '12345',
+    		targetIdList = '';
+    $('#test-part .fields:visible').each(function(index, item) {
+      expect(String($(item).attr('id'))).toBe(String(index+1));
+    });
 
-  // 	$('#test-part label:visible').each(function(index, item) {
-  // 		expect($(item).html()).toBe('Step '+String(index+1));
-  // 	});
-  //   var expectedIdList = '1245',
-  //   		targetIdList = '';
-  //   $('#test-part .fields:visible').each(function(inedx, item) {
-  //   	targetIdList += String($(item).attr('id'));
-  //   });
+    $('#test-part .position-field:visible').each(function(index, item) {
+      expect($(item).val()).toBe(String(index+1));
+    });
+  });
 
-  //   var expectedPositionFieldVal = '1234',
-  //       targetPositionFieldVal = '';
-  //   $('#test-part .position-field:visible').each(function(index, item) {
-  //     targetPositionFieldVal += $(item).val();
-  //   });
-  //   expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
-  // });
+  // Delete label test
+  it("Delete label", function() {
+
+    $('#test-part5').sortableLabel({
+      fieldName: "test_field"
+    });
+
+    $('#test-part5').trigger('sortableLabel:refresh');
+
+    $('#test-part5 label:visible').each(function(index, item) {
+      expect($(item).html()).toBe('Step '+String(index+1));
+    });
+    var expectedIdList = '134',
+        targetIdList = '';
+    $('#test-part5 .fields:visible').each(function(index, item) {
+      targetIdList += String($(item).attr('id'));
+    });
+    expect(targetIdList).toBe(expectedIdList);
+
+    $('#test-part5 .position-field:visible').each(function(index, item) {
+      expect($(item).val()).toBe(String(index+1));
+    });
+  });
 
   // Nested label test
   it("nested objects", function() {
