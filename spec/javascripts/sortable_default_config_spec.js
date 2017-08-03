@@ -153,6 +153,5 @@ describe("default config test", function() {
 
   //   expect(targetWorkoutGroupId).toBe(expectedWorkoutGroupId);
   //   expect(targetGroupLabel).toBe(expectedGroupLabel);
-
   // });
 });
