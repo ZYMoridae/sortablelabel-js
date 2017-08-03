@@ -45,7 +45,7 @@ describe("default config test", function() {
     $('#test-part .fields').each(function(inedx, item) {
     	targetIdList += String($(item).attr('id'));
     });
-
+    
     $('#test-part .fields .position-field').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
     });
@@ -97,6 +97,13 @@ describe("default config test", function() {
     $('#test-part5 .position-field:visible').each(function(index, item) {
       expect($(item).val()).toBe(String(index+1));
     });
+    console.log($('#test-part').html());
+    var expectedPositionFieldVal = '1234',
+        targetPositionFieldVal = '';
+    $('#test-part .position-field').each(function(index, item) {
+      targetPositionFieldVal += $(item).val();
+    });
+    expect(targetPositionFieldVal).toBe(expectedPositionFieldVal);
   });
 
   // Nested label test
