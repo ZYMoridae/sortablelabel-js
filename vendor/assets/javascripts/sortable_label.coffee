@@ -96,10 +96,20 @@ class @SortableLabel
             name: tempLabel,
             count: 1
           )
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
+          if typeof _this.options['subPositionTarget'] == 'string'
+            $(this).closest('.fields').find(_this.options['subPositionTarget']).val(1)
+          if typeof _this.options['groupLabel'] == 'string'
+            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " 1")
+          else
+            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
         else if _index > -1
           week_group_label_list[_index].count += 1
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
+          if typeof _this.options['subPositionTarget'] == 'string'
+            $(this).closest('.fields').find(_this.options['subPositionTarget']).val(week_group_label_list[_index].count)
+          if typeof _this.options['groupLabel'] == 'string'
+            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " " + week_group_label_list[_index].count)
+          else
+            $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
       )
     )
 
