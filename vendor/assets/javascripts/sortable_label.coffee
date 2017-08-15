@@ -99,11 +99,11 @@ class @SortableLabel
             count: 1
           )
           $(this).closest('.fields').find(_this.options['subPositionTarget']).val(1)
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " 1")
+          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
         else if _index > -1
           week_group_label_list[_index].count += 1
           $(this).closest('.fields').find(_this.options['subPositionTarget']).val(week_group_label_list[_index].count)
-          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel + " " + _this.options['groupLabel'] + " " + week_group_label_list[_index].count)
+          $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
       )
     )
 
