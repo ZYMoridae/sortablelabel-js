@@ -111,7 +111,6 @@ class @SortableLabel
               $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>" + tempLabel)
         else
           $(this).html("<i class='fa fa-trophy fa-fw small-opacity-30'></i>")
-
       )
     )
 
