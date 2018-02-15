@@ -13,7 +13,9 @@ class @SortableLabel
     @options   = $.extend({}, defaults, options)
     @target    = scope
     @targetId  = @options['fieldName'] || @target.attr('id')
+    @stop_callback  = @options["stop"]
     @calInitStepLable()
+    @initSortByPosition()
 
     $(document).on("nested:fieldAdded:#{@targetId}", (event) =>
       @calStepLable()
@@ -40,11 +42,49 @@ class @SortableLabel
         $(this).find('.ui-state-highlight').css('height', $(ui.item).css('height'))        
       stop: =>
         @calStepLable()
+        if typeof(@stop_callback) == 'function'
+          @stop_callback()
     )
 
     @target.on('sortableLabel:disable', =>
       @target.sortable('disable')
     )
+
+  # 1. ascending sort if all position fields are not provided
+  # 2. ascending sort field elements which part of them are no provided position
+  initSortByPosition: () ->
+    all_fields = $(@target).find(@options['sortableItem'])
+    _positionTarget = @options['positionTarget']
+    all_fields_info = []
+    maxium_position = 1
+
+    if all_fields.length > 0
+      all_fields.each((index, field_item) ->
+        _position = $(field_item).find(_positionTarget).val()
+        if _position && _position != '' && typeof _position != 'undefined'
+          _position = parseInt(_position, 10)
+          if _position >= maxium_position
+            maxium_position = _position
+      )
+      all_fields.each((index, field_item) ->
+        _position = parseInt($(field_item).find(_positionTarget).val(), 10)
+        if typeof(_position) == 'undefined'
+          _position = maxium_position
+          maxium_position += 1
+        all_fields_info.push({
+          position: _position,
+          j_element: field_item
+        })
+      )
+
+      if all_fields_info.length > 0
+        all_fields_info.sort((a, b) -> 
+          return a.position - b.position
+        )
+
+      all_fields_info.forEach((index, item) ->
+        $(@target).append(item.j_element)
+      )
 
   calInitStepLable: ->
     this.calLabel(this.options['removeField']+'[value=false]')
@@ -81,6 +121,7 @@ class @SortableLabel
           stepCount += 1
       )      
     )
+
 
   calWeekGroupLabel: (target) ->
     _this = this
